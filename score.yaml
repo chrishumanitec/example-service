@@ -9,6 +9,7 @@ containers:
 
     variables:
       MESSAGE: "${resources.env.EXAMPLE_MESSAGE}"
+      DEMO_VAR: "Hello Word!"
 
     files:
     - target: /etc/nginx/templates/default.conf.template
