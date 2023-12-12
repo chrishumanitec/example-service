@@ -6,3 +6,40 @@ metadata:
 containers:
   service:
     image: nginx:1.25.3-alpine
+
+    variables:
+      MESSAGE: "Hello World!"
+
+    files:
+    - target: /etc/nginx/templates/default.conf.template
+      mode: "0664"
+      source: nginx.conf
+      noExpand: true
+    - target: /www/html/index.html
+      mode: "0664"
+      content: |
+        <html><body>
+          <h1>Config</h1>
+          <table>
+            <tr><th>Param</th><th>Value</th></tr>
+            <tr><td><code>BUCKET</code></td><td><code>${resources.bucket.container}</code></td></tr>
+          </table>
+        </body></html>
+
+service:
+  ports:
+    www:
+      port: 8080
+      targetPort: 8080
+
+resources:
+  service-dns:
+    type: dns
+  service-route:
+    type: route
+    params:
+      host: ${resources.service-dns.host}
+      port: 8080
+      path: /
+  bucket:
+    type: azure-blob
