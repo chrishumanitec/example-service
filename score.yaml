@@ -8,7 +8,7 @@ containers:
     image: nginx:1.25.3-alpine
 
     variables:
-      MESSAGE: "Hello World!"
+      MESSAGE: "${resources.env.EXAMPLE_MESSAGE}"
 
     files:
     - target: /etc/nginx/templates/default.conf.template
@@ -33,6 +33,8 @@ service:
       targetPort: 8080
 
 resources:
+  env:
+    type: environment
   service-dns:
     type: dns
   service-route:
