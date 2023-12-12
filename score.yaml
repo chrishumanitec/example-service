@@ -1,0 +1,8 @@
+apiVersion: score.dev/v1b1
+
+metadata:
+  name: example-service
+
+containers:
+  service:
+    image: nginx:1.25.3-alpine
